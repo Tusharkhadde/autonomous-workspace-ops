@@ -1,0 +1,173 @@
+// Prisma schema for Ghost Operator & Workspace Optimizer
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WorkflowRun {
+  id           String          @id @default(uuid())
+  title        String
+  prompt       String
+  status       String          @default("queued") // queued, running, awaiting_human, succeeded, failed, recovering, cancelled
+  cuaVersion   String          @default("v5")
+  machineId    String?
+  maxSteps     Int             @default(5)
+  stepsCount   Int             @default(0)
+  riskScore    String          @default("low")
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  endedAt      DateTime?
+  steps        ExecutionStep[]
+  approvals    HumanApproval[]
+}
+
+model ExecutionStep {
+  id               String          @id @default(uuid())
+  runId            String
+  run              WorkflowRun     @relation(fields: [runId], references: [id], onDelete: Cascade)
+  stepNumber       Int
+  title            String
+  description      String
+  actionType       String
+  targetApp        String?
+  command          String?
+  status           String          @default("pending") // pending, running, awaiting_approval, succeeded, failed, self_healing
+  durationMs       Int             @default(0)
+  riskLevel        String          @default("low")
+  requiresApproval Boolean         @default(false)
+  isApproved       Boolean         @default(false)
+  outputLogs       String?
+  screenshotUrl    String?
+  errorMsg         String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  HumanApproval    HumanApproval[]
+}
+
+model HumanApproval {
+  id               String        @id @default(uuid())
+  stepId           String
+  step             ExecutionStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  runId            String
+  run              WorkflowRun   @relation(fields: [runId], references: [id], onDelete: Cascade)
+  prompt           String
+  sideEffects      String
+  dangerousCommand String?
+  status           String        @default("pending") // pending, approved, rejected, modified
+  responseType     String?
+  customInput      String?
+  createdAt        DateTime      @default(now())
+  respondedAt      DateTime?
+}
+
+model MemoryItem {
+  id             String   @id @default(uuid())
+  category       String   // credential, directory, endpoint, workflow_pattern, environment
+  key            String
+  value          String
+  confidence     Float    @default(1.0)
+  useCount       Int      @default(1)
+  lastUsedAt     DateTime @default(now())
+  createdAt      DateTime @default(now())
+}
+
+model SavedWorkflow {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  triggerKeyword String
+  prompt         String
+  category       String   @default("development")
+  usageCount     Int      @default(0)
+  createdAt      DateTime @default(now())
+}
+
+model AnalyticsRecord {
+  id                 String   @id @default(uuid())
+  runId              String   @unique
+  durationMs         Int
+  stepCount          Int
+  costEstimate       Float    @default(0.0)
+  success            Boolean  @default(true)
+  interventionCount  Int      @default(0)
+  createdAt          DateTime @default(now())
+}
+
+// Workspace Optimizer Models
+model ActivityLog {
+  id           String   @id @default(uuid())
+  appName      String
+  windowTitle  String
+  category     String   @default("development")
+  durationSec  Int
+  switches     Int      @default(1)
+  idleTimeSec  Int      @default(0)
+  timestamp    DateTime @default(now())
+}
+
+model ProductivityInsight {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  type           String
+  impactLevel    String   @default("medium")
+  timeWastedMins Int      @default(0)
+  createdAt      DateTime @default(now())
+}
+
+model AutomationSuggestion {
+  id            String   @id @default(uuid())
+  title         String
+  description   String
+  actionType    String
+  timeSavedMins Int      @default(15)
+  isExecuted    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model DuplicateItem {
+  id             String   @id @default(uuid())
+  fileName       String
+  filePath       String
+  fileSizeMb     Float
+  duplicateCount Int      @default(2)
+  category       String
+  createdAt      DateTime @default(now())
+}
+
+model WorkflowSequence {
+  id              String   @id @default(uuid())
+  name            String
+  sequence        String
+  occurrenceCount Int      @default(1)
+  suggestedName   String
+  createdAt       DateTime @default(now())
+}
+
+model FocusSession {
+  id              String   @id @default(uuid())
+  score           Int      @default(85)
+  contextSwitches Int      @default(45)
+  deepWorkMins    Int      @default(180)
+  codingMins      Int      @default(210)
+  researchMins    Int      @default(90)
+  meetingMins     Int      @default(45)
+  idleMins        Int      @default(25)
+  date            DateTime @default(now())
+}
+
+model MissionRun {
+  id          String   @id @default(uuid())
+  missionName String
+  prompt      String
+  status      String
+  cuaVersion  String   @default("v5")
+  coastyRunId String?
+  stepCount   Int      @default(3)
+  createdAt   DateTime @default(now())
+}
