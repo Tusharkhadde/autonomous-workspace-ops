@@ -15,7 +15,7 @@ import {
 const COASTY_BASE_URL = process.env.COASTY_BASE_URL || 'https://coasty.ai';
 
 if (!process.env.COASTY_API_KEY) {
-  console.warn('[CoastyClient] WARNING: COASTY_API_KEY environment variable is not set. Set it in your .env file.');
+  console.warn('[CoastyClient] WARNING: COASTY_API_KEY environment variable is not set. Set it in your .env file or Vercel settings.');
 }
 
 export class CoastyClient {
@@ -23,20 +23,27 @@ export class CoastyClient {
 
   constructor(apiKey?: string) {
     this.apiKey = apiKey || process.env.COASTY_API_KEY || '';
-    if (!this.apiKey) {
-      throw new Error('COASTY_API_KEY is not configured. Add it to your .env file.');
+  }
+
+  private getEffectiveApiKey(): string {
+    const key = this.apiKey || process.env.COASTY_API_KEY || '';
+    if (!key) {
+      throw new Error('COASTY_API_KEY is not configured. Add it to your Vercel Environment Variables or .env file.');
     }
+    return key;
   }
 
   public getMaskedKey(): string {
-    if (!this.apiKey) return 'No Key';
-    return `${this.apiKey.slice(0, 18)}...${this.apiKey.slice(-4)}`;
+    const key = this.apiKey || process.env.COASTY_API_KEY || '';
+    if (!key) return 'No Key';
+    return `${key.slice(0, 18)}...${key.slice(-4)}`;
   }
 
   private getHeaders(withIdempotency = false): Record<string, string> {
+    const key = this.getEffectiveApiKey();
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'X-API-Key': this.apiKey,
+      'X-API-Key': key,
     };
     if (withIdempotency) {
       headers['Idempotency-Key'] = `idem-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
@@ -109,7 +116,7 @@ export class CoastyClient {
   }
 
   getEventStreamHeaders(): Record<string, string> {
-    return { 'X-API-Key': this.apiKey };
+    return { 'X-API-Key': this.getEffectiveApiKey() };
   }
 
   /**
