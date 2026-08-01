@@ -5,6 +5,7 @@ interface WorkflowState {
   activeRun: WorkflowRunData | null;
   selectedStep: WorkflowStep | null;
 
+  setActiveRun: (run: WorkflowRunData | null) => void;
   setSelectedStep: (step: WorkflowStep | null) => void;
   pollRunStatus: (runId: string) => Promise<void>;
 }
@@ -13,6 +14,7 @@ export const useWorkflowStore = create<WorkflowState>((set) => ({
   activeRun: null,
   selectedStep: null,
 
+  setActiveRun: (activeRun) => set({ activeRun }),
   setSelectedStep: (selectedStep) => set({ selectedStep }),
 
   pollRunStatus: async (runId: string) => {

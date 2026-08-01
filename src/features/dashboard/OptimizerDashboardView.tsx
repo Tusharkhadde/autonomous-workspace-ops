@@ -70,7 +70,7 @@ export const OptimizerDashboardView: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-3 shrink-0">
-          <Button onClick={() => router.push('/missions')}>
+          <Button onClick={() => router.push('/missions' as any)}>
             <Sparkles className="w-4 h-4 mr-1.5" />
             <span>Launch Mission</span>
           </Button>
@@ -157,7 +157,7 @@ export const OptimizerDashboardView: React.FC = () => {
                 <BrainCircuit className="w-4 h-4 text-cyan-400" />
                 <span>Detected Inefficiencies & AI Insights</span>
               </h3>
-              <Button size="sm" variant="ghost" onClick={() => router.push('/insights')}>
+              <Button size="sm" variant="ghost" onClick={() => router.push('/insights' as any)}>
                 View All ({insights.length})
               </Button>
             </div>
@@ -188,7 +188,7 @@ export const OptimizerDashboardView: React.FC = () => {
               </h3>
               <Button size="sm" variant="ghost" onClick={() => {
                 useOptimizerStore.getState().setActiveTab('suggestions');
-                router.push('/insights');
+                router.push('/insights' as any);
               }}>
                 All
               </Button>
@@ -226,7 +226,7 @@ export const OptimizerDashboardView: React.FC = () => {
               {missions.slice(0, 3).map((m) => (
                 <div
                   key={m.id}
-                  onClick={() => router.push('/missions')}
+                  onClick={() => router.push('/missions' as any)}
                   className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500/40 transition-all cursor-pointer flex items-center justify-between"
                 >
                   <div>

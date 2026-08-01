@@ -2,16 +2,19 @@
 
 import React from 'react';
 import { WorkflowStep } from '@/types/workflow';
-import { getStatusColor, getRiskBadgeColor } from '@/lib/utils';
+import { getStatusColor } from '@/lib/utils';
 import {
   CheckCircle2,
   Clock,
-  AlertTriangle,
   Play,
   ShieldAlert,
   Wrench,
   ChevronRight,
+  Layers,
+  Zap,
 } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface StepTimelineProps {
   steps: WorkflowStep[];
@@ -25,14 +28,18 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({
   onSelectStep,
 }) => {
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between px-1">
-        <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono">
-          Live Execution Graph ({steps.length} Steps)
-        </h3>
-      </div>
+    <Card className="bg-zinc-950 border-zinc-800 shadow-2xl">
+      <CardHeader className="p-4 border-b border-zinc-800/80 flex flex-row items-center justify-between space-y-0 pb-3">
+        <CardTitle className="text-xs font-mono font-bold uppercase text-zinc-300 flex items-center space-x-2">
+          <Layers className="w-4 h-4 text-cyan-400" />
+          <span>Execution Graph ({steps.length} Steps)</span>
+        </CardTitle>
+        <Badge variant="outline" className="text-[10px] font-mono text-cyan-400 border-cyan-500/30">
+          Replay Mode
+        </Badge>
+      </CardHeader>
 
-      <div className="space-y-2 max-h-[460px] overflow-y-auto pr-1">
+      <CardContent className="p-3 space-y-2 max-h-[480px] overflow-y-auto">
         {steps.map((step, idx) => {
           const isSelected = selectedStep?.id === step.id;
           const isRunning = step.status === 'running';
@@ -46,12 +53,12 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({
               onClick={() => onSelectStep(step)}
               className={`p-3.5 rounded-xl border transition-all cursor-pointer space-y-2 ${
                 isSelected
-                  ? 'bg-zinc-900 border-cyan-500/50 shadow-lg shadow-cyan-500/10'
+                  ? 'bg-zinc-900 border-cyan-500/60 shadow-lg shadow-cyan-500/10'
                   : 'bg-zinc-950/60 border-zinc-800/80 hover:border-zinc-700/80'
               }`}
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2.5">
+                <div className="flex items-center space-x-2.5 min-w-0">
                   {/* Status Icon */}
                   {isSucceeded && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
                   {isRunning && <Play className="w-4 h-4 text-cyan-400 animate-pulse shrink-0 fill-cyan-400" />}
@@ -61,12 +68,12 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({
                     <Clock className="w-4 h-4 text-zinc-500 shrink-0" />
                   )}
 
-                  <span className="font-semibold text-xs text-white truncate max-w-[180px]">
-                    {idx + 1}. {step.title}
+                  <span className="font-semibold text-xs text-white truncate">
+                    #{idx + 1}. {step.title}
                   </span>
                 </div>
 
-                <div className="flex items-center space-x-1.5">
+                <div className="flex items-center space-x-1.5 shrink-0">
                   <span
                     className={`px-2 py-0.5 text-[9px] font-mono font-bold uppercase rounded border ${getStatusColor(
                       step.status
@@ -78,15 +85,25 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({
                 </div>
               </div>
 
+              {step.targetApp && (
+                <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 pt-0.5">
+                  <span className="flex items-center space-x-1">
+                    <Zap className="w-3 h-3 text-cyan-400" />
+                    <span>App: {step.targetApp}</span>
+                  </span>
+                  <span className="text-zinc-500">Risk: {step.riskLevel || 'low'}</span>
+                </div>
+              )}
+
               {step.command && (
-                <p className="text-[11px] font-mono text-zinc-400 truncate bg-zinc-900/90 p-1.5 rounded border border-zinc-800/60">
+                <p className="text-[11px] font-mono text-zinc-400 truncate bg-zinc-900/90 p-2 rounded-lg border border-zinc-800/80">
                   $ {step.command}
                 </p>
               )}
             </div>
           );
         })}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };

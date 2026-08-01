@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Sparkles,
@@ -19,6 +19,9 @@ import {
   Wand2,
   Radio,
   Star,
+  Monitor,
+  Command,
+  Sliders,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -26,8 +29,54 @@ import { Badge } from '@/components/ui/badge';
 import { LiveScreenshotCanvas } from '@/components/execution/LiveScreenshotCanvas';
 
 export default function LandingPage() {
+  const [activeDemoStep, setActiveDemoStep] = useState(2);
+
+  const demoSteps = [
+    {
+      stepNumber: 1,
+      title: 'Initialize Terminal & Inspect Node Environment',
+      targetApp: 'Terminal',
+      actionText: 'Checking Node.js v20.11.0 & verifying available ports',
+      command: 'node -v && lsof -i :3000',
+      status: 'succeeded' as const,
+      outputLogs: '[STDOUT] Node.js v20.11.0 verified\n[STDOUT] Port 3000 open for dev server.',
+    },
+    {
+      stepNumber: 2,
+      title: 'Launch VS Code Workspace Editor',
+      targetApp: 'VS Code',
+      actionText: 'Opening project repository in VS Code editor with split windows',
+      command: 'code ./workspace',
+      status: 'running' as const,
+      outputLogs: '[COASTY CUA] Launched VS Code executable. Workspace ./workspace opened.',
+    },
+    {
+      stepNumber: 3,
+      title: 'Start Next.js Development Server',
+      targetApp: 'Terminal',
+      actionText: 'Executing npm run dev and starting local dev server on port 3000',
+      command: 'npm run dev',
+      status: 'pending' as const,
+      outputLogs: '[COASTY CUA] > next dev\n[INFO] Ready in 1.8s at http://localhost:3000',
+    },
+    {
+      stepNumber: 4,
+      title: 'Open Google Chrome Developer Docs',
+      targetApp: 'Google Chrome',
+      actionText: 'Navigating to API reference guide & developer documentation',
+      command: 'google-chrome http://localhost:3000',
+      status: 'pending' as const,
+      outputLogs: '[PENDING] Awaiting step 3 completion before launching browser view.',
+    },
+  ];
+
+  const currentDemo = demoSteps[activeDemoStep];
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+      {/* Background Grid Pattern */}
+      <div className="fixed inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.04] pointer-events-none z-0" />
+
       {/* Navigation Header */}
       <header className="h-20 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-xl px-6 lg:px-12 flex items-center justify-between sticky top-0 z-50">
         <Link href="/" className="flex items-center space-x-3 group">
@@ -55,13 +104,13 @@ export default function LandingPage() {
         </nav>
 
         <div className="flex items-center space-x-3">
-          <Link href="/login">
+          <Link href={'/login' as any}>
             <Button variant="ghost" className="text-xs text-zinc-300 hover:text-white">
               Sign In
             </Button>
           </Link>
-          <Link href="/dashboard">
-            <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/25 px-5">
+          <Link href={'/dashboard' as any}>
+            <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/25 px-5 rounded-xl">
               <span>Launch App</span>
               <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
@@ -70,14 +119,14 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 px-6 lg:px-12 text-center max-w-6xl mx-auto overflow-hidden">
-        {/* Glow Spheres */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-cyan-500/15 via-blue-600/15 to-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative pt-20 pb-16 px-6 lg:px-12 text-center max-w-6xl mx-auto overflow-hidden z-10">
+        {/* Ambient Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[750px] h-[380px] bg-gradient-to-r from-cyan-500/15 via-blue-600/15 to-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-6">
           <div className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-cyan-500/30 text-xs font-mono text-cyan-400 shadow-xl backdrop-blur-md">
             <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span>Next-Gen Computer Use Model • Coasty CUA Engine v5</span>
+            <span>Autonomous Desktop Agent Model • Coasty CUA Engine v5</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
@@ -93,14 +142,14 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Link href="/missions">
+            <Link href={'/missions' as any}>
               <Button size="lg" className="w-full sm:w-auto bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-sm px-8 py-6 rounded-2xl shadow-xl shadow-cyan-500/25 transition-all">
                 <Play className="w-4 h-4 mr-2 fill-black" />
                 <span>Launch Autonomous Mission</span>
               </Button>
             </Link>
 
-            <Link href="/dashboard">
+            <Link href={'/dashboard' as any}>
               <Button size="lg" variant="outline" className="w-full sm:w-auto border-zinc-800 bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 font-bold text-sm px-8 py-6 rounded-2xl">
                 <span>Explore Workspace Dashboard</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -108,7 +157,7 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          {/* Social Proof */}
+          {/* Social Badges */}
           <div className="pt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-500 font-mono">
             <div className="flex items-center space-x-1.5 text-emerald-400">
               <CheckCircle2 className="w-4 h-4" />
@@ -127,32 +176,53 @@ export default function LandingPage() {
       </section>
 
       {/* Live Interactive Stream Demo */}
-      <section id="demo" className="py-12 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+      <section id="demo" className="py-12 px-6 lg:px-12 max-w-7xl mx-auto w-full z-10">
         <div className="text-center space-y-2 mb-8">
           <Badge variant="outline" className="text-[10px] font-mono text-cyan-400 border-cyan-500/30">
-            REAL-TIME FEED PREVIEW
+            INTERACTIVE REPLAY STREAM DEMO
           </Badge>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Live Desktop Screen Stream & Action Logs
+            Live Desktop Screen Stream & Step Timeline
           </h2>
           <p className="text-xs text-zinc-400 max-w-xl mx-auto">
-            Watch Coasty CUA Agent execute multi-step desktop actions in real time with low latency visual streaming.
+            Click any step below to test the time-travel step replay and observe Coasty CUA Agent executing actions.
           </p>
         </div>
 
+        {/* Step Selector Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
+          {demoSteps.map((step, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveDemoStep(idx)}
+              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all flex items-center space-x-2 border ${
+                activeDemoStep === idx
+                  ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold shadow-lg shadow-cyan-500/10'
+                  : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700'
+              }`}
+            >
+              <span className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center text-[10px]">
+                {step.stepNumber}
+              </span>
+              <span>{step.targetApp}</span>
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Visual Screen Feed */}
           <div className="lg:col-span-2">
             <LiveScreenshotCanvas
               step={{
-                id: 'demo_step_101',
+                id: `demo_step_${currentDemo.stepNumber}`,
                 runId: 'demo_run_999',
-                stepNumber: 3,
-                title: 'Step #3: Opening VS Code & initializing dev environment',
-                description: 'Open Slack, launch VS Code, start dev servers',
+                stepNumber: currentDemo.stepNumber,
+                title: currentDemo.title,
+                description: currentDemo.actionText,
                 actionType: 'command',
-                targetApp: 'VS Code',
-                command: 'code ./workspace && npm run dev',
-                status: 'running',
+                targetApp: currentDemo.targetApp,
+                command: currentDemo.command,
+                status: currentDemo.status,
                 durationMs: 1500,
                 riskLevel: 'low',
                 requiresApproval: false,
@@ -165,7 +235,8 @@ export default function LandingPage() {
             />
           </div>
 
-          <div className="rounded-2xl bg-zinc-950 border border-zinc-800 p-5 space-y-4 flex flex-col justify-between">
+          {/* CUA Stream Log & Stats */}
+          <div className="rounded-2xl bg-zinc-950 border border-zinc-800 p-5 space-y-4 flex flex-col justify-between shadow-2xl">
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
                 <div className="flex items-center space-x-2 text-xs font-mono text-emerald-400 font-bold">
@@ -177,31 +248,33 @@ export default function LandingPage() {
                 </Badge>
               </div>
 
-              <div className="space-y-2 font-mono text-xs text-zinc-300">
-                <p className="text-zinc-500 text-[11px]">[12:00:01 AM] 🚀 Task received: "Prepare Coding Workspace"</p>
-                <p className="text-cyan-400">[12:00:03 AM] ⚙️  CUA Engine: Coasty v5 provisioned node</p>
-                <p className="text-emerald-400">[12:00:05 AM] ✓ Step 1: Terminal launched on port 3000</p>
-                <p className="text-emerald-400">[12:00:10 AM] ✓ Step 2: VS Code workspace initialized</p>
-                <p className="text-cyan-300 font-bold">[12:00:15 AM] ⏳ Step 3: Executing active desktop action...</p>
+              <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1.5">
+                <p className="text-cyan-400 font-bold">$ {currentDemo.command}</p>
+                <p className="text-zinc-400 text-[11px] leading-relaxed">{currentDemo.actionText}</p>
+                <div className="p-2 rounded bg-zinc-950 border border-zinc-800 text-[11px] text-zinc-300 font-mono whitespace-pre-wrap">
+                  {currentDemo.outputLogs}
+                </div>
               </div>
             </div>
 
             <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2">
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-zinc-400">Task Completion Rate</span>
-                <span className="text-cyan-400 font-bold">100% Verified</span>
+                <span className="text-zinc-400">Active Execution Progress</span>
+                <span className="text-cyan-400 font-bold">Step {activeDemoStep + 1} / 4</span>
               </div>
               <div className="h-2 rounded-full bg-zinc-800 overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 w-[75%] rounded-full animate-pulse" />
+                <div
+                  className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-300"
+                  style={{ width: `${((activeDemoStep + 1) / 4) * 100}%` }}
+                />
               </div>
-              <p className="text-[10px] text-zinc-500 font-mono text-right">3 / 4 steps completed</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Benchmarks Section */}
-      <section id="benchmarks" className="py-16 px-6 lg:px-12 bg-zinc-900/40 border-y border-zinc-800/80">
+      <section id="benchmarks" className="py-16 px-6 lg:px-12 bg-zinc-900/40 border-y border-zinc-800/80 z-10">
         <div className="max-w-7xl mx-auto space-y-10">
           <div className="text-center space-y-2">
             <Badge variant="outline" className="text-[10px] font-mono text-cyan-400 border-cyan-500/30">
@@ -214,7 +287,7 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2">
+            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2 shadow-2xl">
               <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 w-fit">
                 <Zap className="w-6 h-6" />
               </div>
@@ -223,7 +296,7 @@ export default function LandingPage() {
               <p className="text-xs text-zinc-400">Automates repetitive setup, build tasks, and environment config.</p>
             </Card>
 
-            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2">
+            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2 shadow-2xl">
               <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 w-fit">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
@@ -232,7 +305,7 @@ export default function LandingPage() {
               <p className="text-xs text-zinc-400">Coasty vision model predicts UI target coordinates with pixel precision.</p>
             </Card>
 
-            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2">
+            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2 shadow-2xl">
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 w-fit">
                 <Layers className="w-6 h-6" />
               </div>
@@ -241,7 +314,7 @@ export default function LandingPage() {
               <p className="text-xs text-zinc-400">Supports long multi-step workflows with autonomous self-correction.</p>
             </Card>
 
-            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2">
+            <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2 shadow-2xl">
               <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 w-fit">
                 <ShieldCheck className="w-6 h-6" />
               </div>
@@ -254,7 +327,7 @@ export default function LandingPage() {
       </section>
 
       {/* Feature Modules Grid */}
-      <section id="features" className="py-16 px-6 lg:px-12 max-w-7xl mx-auto space-y-12">
+      <section id="features" className="py-16 px-6 lg:px-12 max-w-7xl mx-auto space-y-12 z-10">
         <div className="text-center space-y-2">
           <Badge variant="outline" className="text-[10px] font-mono text-cyan-400 border-cyan-500/30">
             INTELLIGENT MODULES
@@ -266,7 +339,7 @@ export default function LandingPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-zinc-900/80 border-zinc-800 p-6 space-y-4 hover:border-cyan-500/50 transition-colors">
+          <Card className="bg-zinc-900/80 border-zinc-800 p-6 space-y-4 hover:border-cyan-500/50 transition-colors shadow-2xl">
             <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 w-fit">
               <Wand2 className="w-6 h-6" />
             </div>
@@ -274,13 +347,13 @@ export default function LandingPage() {
             <p className="text-xs text-zinc-400 leading-relaxed">
               Launch pre-built or custom computer-use missions. Powered directly by <span className="font-mono text-cyan-400">POST https://coasty.ai/v1/tasks</span>.
             </p>
-            <Link href="/missions" className="inline-flex items-center text-xs font-bold text-cyan-400 hover:underline">
+            <Link href={'/missions' as any} className="inline-flex items-center text-xs font-bold text-cyan-400 hover:underline">
               <span>Open Missions</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Link>
           </Card>
 
-          <Card className="bg-zinc-900/80 border-zinc-800 p-6 space-y-4 hover:border-cyan-500/50 transition-colors">
+          <Card className="bg-zinc-900/80 border-zinc-800 p-6 space-y-4 hover:border-cyan-500/50 transition-colors shadow-2xl">
             <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 w-fit">
               <Code2 className="w-6 h-6" />
             </div>
@@ -288,13 +361,13 @@ export default function LandingPage() {
             <p className="text-xs text-zinc-400 leading-relaxed">
               Record user actions, edit execution steps, and generate structured execution plans with risk scoring.
             </p>
-            <Link href="/workflows" className="inline-flex items-center text-xs font-bold text-cyan-400 hover:underline">
+            <Link href={'/workflows' as any} className="inline-flex items-center text-xs font-bold text-cyan-400 hover:underline">
               <span>Open Workflows</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Link>
           </Card>
 
-          <Card className="bg-zinc-900/80 border-zinc-800 p-6 space-y-4 hover:border-cyan-500/50 transition-colors">
+          <Card className="bg-zinc-900/80 border-zinc-800 p-6 space-y-4 hover:border-cyan-500/50 transition-colors shadow-2xl">
             <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 w-fit">
               <Radio className="w-6 h-6" />
             </div>
@@ -302,7 +375,7 @@ export default function LandingPage() {
             <p className="text-xs text-zinc-400 leading-relaxed">
               Step forward and backward through past step executions with detailed log inspection and step screenshot playback.
             </p>
-            <Link href="/live" className="inline-flex items-center text-xs font-bold text-cyan-400 hover:underline">
+            <Link href={'/live' as any} className="inline-flex items-center text-xs font-bold text-cyan-400 hover:underline">
               <span>View Replay Stream</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Link>
@@ -311,8 +384,8 @@ export default function LandingPage() {
       </section>
 
       {/* Coasty API Callout */}
-      <section id="api" className="py-16 px-6 lg:px-12 bg-zinc-900/60 border-t border-zinc-800">
-        <div className="max-w-5xl mx-auto p-8 rounded-3xl bg-zinc-950 border border-zinc-800 space-y-6">
+      <section id="api" className="py-16 px-6 lg:px-12 bg-zinc-900/60 border-t border-zinc-800 z-10">
+        <div className="max-w-5xl mx-auto p-8 rounded-3xl bg-zinc-950 border border-zinc-800 space-y-6 shadow-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
@@ -323,7 +396,7 @@ export default function LandingPage() {
                 Configure your API key in <code className="font-mono text-cyan-400">.env</code> to unleash real managed execution containers on Coasty cloud machines.
               </p>
             </div>
-            <Link href="/settings">
+            <Link href={'/settings' as any}>
               <Button className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white text-xs font-mono font-bold">
                 Configure COASTY_API_KEY
               </Button>
@@ -342,12 +415,12 @@ const taskResponse = await coastyClient.submitTask({
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 lg:px-12 border-t border-zinc-800 text-center text-xs text-zinc-500 space-y-4">
+      <footer className="py-12 px-6 lg:px-12 border-t border-zinc-800 text-center text-xs text-zinc-500 space-y-4 z-10">
         <div className="flex items-center justify-center space-x-6">
-          <Link href="/dashboard" className="hover:text-zinc-300">Dashboard</Link>
-          <Link href="/missions" className="hover:text-zinc-300">Missions</Link>
-          <Link href="/workflows" className="hover:text-zinc-300">Workflows</Link>
-          <Link href="/login" className="hover:text-zinc-300">Sign In</Link>
+          <Link href={'/dashboard' as any} className="hover:text-zinc-300">Dashboard</Link>
+          <Link href={'/missions' as any} className="hover:text-zinc-300">Missions</Link>
+          <Link href={'/workflows' as any} className="hover:text-zinc-300">Workflows</Link>
+          <Link href={'/login' as any} className="hover:text-zinc-300">Sign In</Link>
         </div>
         <p>© 2026 COASTY AI • Autonomous Computer-Use AI Operator • Powered by Coasty CUA Engine v5</p>
       </footer>
