@@ -13,7 +13,7 @@ interface LiveScreenshotCanvasProps {
 
 export const LiveScreenshotCanvas: React.FC<LiveScreenshotCanvasProps> = ({
   step,
-  runTitle = 'Coasty AI Autonomous Desktop',
+  runTitle = 'Agent Desktop',
   isLive = true,
 }) => {
   const [imgError, setImgError] = useState(false);
@@ -25,6 +25,11 @@ export const LiveScreenshotCanvas: React.FC<LiveScreenshotCanvasProps> = ({
   const screenshotSrc =
     step?.screenshotUrl ||
     generateSyntheticScreenshot(targetApp, runTitle, actionText, stepNumber);
+
+  // Screens produced by generateSyntheticScreenshot are SVG illustrations, not
+  // real captures. Label them so a reviewer never approves a step based on a
+  // fake screen.
+  const isSimulated = screenshotSrc.startsWith('data:image/svg+xml');
 
   React.useEffect(() => {
     setImgError(false);
@@ -41,18 +46,27 @@ export const LiveScreenshotCanvas: React.FC<LiveScreenshotCanvasProps> = ({
             <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
           </div>
           <span className="text-xs font-mono font-medium text-zinc-300">
-            Coasty CUA Stream Feed — {targetApp}
+            {isSimulated ? 'Simulated preview' : 'Agent screen feed'} — {targetApp}
           </span>
         </div>
 
         <div className="flex items-center space-x-3 text-xs font-mono">
-          <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-            </span>
-            <span>1080p @ 60FPS Live</span>
-          </div>
+          {isSimulated ? (
+            <div
+              className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30"
+              title="This screen is an illustration generated in the browser, not a capture from the agent's machine."
+            >
+              <span>Simulated, not a real capture</span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>
+              <span>{isLive ? 'Live' : 'Recorded'}</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -62,7 +76,7 @@ export const LiveScreenshotCanvas: React.FC<LiveScreenshotCanvasProps> = ({
           <img
             src={screenshotSrc}
             onError={() => setImgError(true)}
-            alt="Live Coasty Desktop Screen Feed"
+            alt={isSimulated ? 'Simulated desktop preview (illustration)' : 'Agent desktop screen'}
             className="w-full h-auto max-h-[460px] object-contain rounded-lg border border-zinc-800 shadow-2xl transition-transform duration-300"
           />
         ) : (
@@ -71,13 +85,13 @@ export const LiveScreenshotCanvas: React.FC<LiveScreenshotCanvasProps> = ({
             <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
               <div className="flex items-center space-x-2 text-emerald-400 text-xs">
                 <Terminal className="w-4 h-4" />
-                <span>operator@coasty-vm-node-5:~$</span>
+                <span>operator@sample-vm:~$</span>
               </div>
               <span className="text-xs text-zinc-500">STEP #{stepNumber}</span>
             </div>
 
             <div className="space-y-3 py-4 text-xs">
-              <p className="text-zinc-300 font-bold">[COASTY CUA V5 DESKTOP DRIVER]</p>
+              <p className="text-zinc-300 font-bold">[SIMULATED PREVIEW — not a real capture]</p>
               <p className="text-cyan-400">$ {step?.command || 'Executing workspace action...'}</p>
               <p className="text-emerald-400">✓ Step Target: {targetApp}</p>
               <p className="text-zinc-400">{actionText}</p>
@@ -88,7 +102,7 @@ export const LiveScreenshotCanvas: React.FC<LiveScreenshotCanvasProps> = ({
 
             <div className="flex items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800 pt-2">
               <span>Status: {step?.status || 'Active'}</span>
-              <span className="text-cyan-400">Coasty CUA Engine active</span>
+              <span className="text-amber-300">Simulated</span>
             </div>
           </div>
         )}

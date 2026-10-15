@@ -92,7 +92,7 @@ export const Sidebar: React.FC = () => {
             <span>Local Privacy Active</span>
           </div>
           <p className="text-[10px] text-zinc-500 leading-relaxed">
-            Coasty CUA engine operates with encrypted local tokens and instant human confirmation.
+            Risky agent steps pause for human confirmation before they run.
           </p>
         </div>
       </div>

@@ -39,10 +39,10 @@ export const Header: React.FC = () => {
           <div>
             <div className="flex items-center space-x-2">
               <span className="font-extrabold text-lg tracking-tight text-white font-sans">
-                COASTY AI
+                Approval Desk
               </span>
               <span className="px-2 py-0.5 text-[10px] font-mono uppercase font-bold tracking-wider rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                CUA ENGINE v5
+                DEMO
               </span>
             </div>
             <p className="text-xs text-zinc-400 hidden sm:block">
@@ -145,7 +145,7 @@ export const Header: React.FC = () => {
                 <p className="text-xs font-bold text-white truncate">{user.name}</p>
                 <p className="text-[11px] text-zinc-400 font-mono truncate">{user.email}</p>
                 <span className="inline-block mt-1 px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-mono">
-                  {user.plan || 'Coasty Pro Enterprise'}
+                  {user.plan || 'Demo'}
                 </span>
               </div>
               <button

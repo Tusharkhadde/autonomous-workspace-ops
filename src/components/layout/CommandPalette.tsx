@@ -160,7 +160,7 @@ export const CommandPalette: React.FC = () => {
 
         {/* Footer */}
         <div className="px-4 py-2 bg-zinc-950/80 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-500 font-mono">
-          <span>COASTY AI Command Menu</span>
+          <span>Approval Desk Command Menu</span>
           <span className="flex items-center space-x-3">
             <span>↑↓ Navigate</span>
             <span>↵ Select</span>

@@ -61,7 +61,7 @@ export const OptimizerDashboardView: React.FC = () => {
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
             <Badge variant="default">AI PRODUCTIVITY ENGINEER</Badge>
-            <span className="text-xs font-mono text-zinc-400">Coasty CUA Engine v5</span>
+            <span className="text-xs font-mono text-zinc-400">Agent provider: Coasty API</span>
           </div>
           <h1 className="text-2xl font-extrabold text-white tracking-tight">Workspace Optimizer</h1>
           <p className="text-xs text-zinc-400 max-w-xl">

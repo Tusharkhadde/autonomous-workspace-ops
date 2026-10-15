@@ -50,12 +50,12 @@ export async function POST(req: Request) {
           updatedRun.steps[stepIdx - 1].status = 'succeeded';
           updatedRun.steps[stepIdx - 1].durationMs = 2000 + Math.floor(Math.random() * 1500);
           updatedRun.steps[stepIdx - 1].outputLogs =
-            `[Coasty CUA Engine] Step completed successfully. Exit code 0.\n✓ ${updatedRun.steps[stepIdx - 1].title}`;
+            `[agent] Step completed successfully. Exit code 0.\n✓ ${updatedRun.steps[stepIdx - 1].title}`;
         }
         // Mark current step running
         updatedRun.steps[stepIdx].status = 'running';
         updatedRun.steps[stepIdx].outputLogs =
-          `[Coasty CUA Engine] Executing: ${updatedRun.steps[stepIdx].title}\n[Agent] Machine ${updatedRun.machineId ?? 'cloud_v5'} action initiated...`;
+          `[agent] Executing: ${updatedRun.steps[stepIdx].title}\n[Agent] Machine ${updatedRun.machineId ?? 'cloud_v5'} action initiated...`;
         inMemoryStore.runs.set(runId, updatedRun);
         stepIdx++;
       } else {

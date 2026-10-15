@@ -42,7 +42,7 @@ export default function LoginPage() {
             <Sparkles className="w-5 h-5" />
           </div>
           <span className="font-extrabold text-lg text-white tracking-tight">
-            COASTY <span className="text-cyan-400 font-mono text-xs font-semibold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">CUA v5</span>
+            Approval Desk <span className="text-cyan-400 font-mono text-xs font-semibold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">demo</span>
           </span>
         </Link>
         <Link href="/register">
@@ -64,7 +64,7 @@ export default function LoginPage() {
             </div>
             <CardTitle className="text-2xl font-extrabold text-white">Welcome Back</CardTitle>
             <CardDescription className="text-xs text-zinc-400">
-              Sign in to manage your autonomous Coasty CUA tasks and workspace optimizations.
+              Sign in to review agent runs and approve risky steps.
             </CardDescription>
           </CardHeader>
 
@@ -84,7 +84,7 @@ export default function LoginPage() {
                   <input
                     type="email"
                     required
-                    placeholder="alex.rivera@coasty.ai"
+                    placeholder="alex.rivera@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-cyan-500/50 transition-colors"
@@ -137,7 +137,7 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-3">
               <Button
                 variant="outline"
-                onClick={() => { setEmail('alex.rivera@coasty.ai'); setPassword('demo1234'); }}
+                onClick={() => { setEmail('alex.rivera@example.com'); setPassword('demo1234'); }}
                 className="bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300 text-xs"
               >
                 <Github className="w-4 h-4 mr-2" />
@@ -145,7 +145,7 @@ export default function LoginPage() {
               </Button>
               <Button
                 variant="outline"
-                onClick={() => { setEmail('alex.rivera@coasty.ai'); setPassword('demo1234'); }}
+                onClick={() => { setEmail('alex.rivera@example.com'); setPassword('demo1234'); }}
                 className="bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300 text-xs"
               >
                 <ShieldCheck className="w-4 h-4 mr-2 text-cyan-400" />
@@ -154,7 +154,7 @@ export default function LoginPage() {
             </div>
 
             <p className="text-center text-[11px] text-zinc-500 pt-2">
-              By signing in, you agree to Coasty CUA terms of automated agent compute.
+              Demo sign-in: no real account is created yet.
             </p>
           </CardContent>
         </Card>
@@ -162,7 +162,7 @@ export default function LoginPage() {
 
       {/* Footer */}
       <footer className="px-6 py-4 border-t border-zinc-800/80 text-center text-xs text-zinc-500 font-mono">
-        COASTY AI COMPUTER USE ENGINE v5 • SECURE ENTERPRISE AUTHENTICATION
+        APPROVAL DESK • DEMO AUTHENTICATION
       </footer>
     </div>
   );

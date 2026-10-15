@@ -48,7 +48,7 @@ export default function LandingPage() {
       actionText: 'Opening project repository in VS Code editor with split windows',
       command: 'code ./workspace',
       status: 'running' as const,
-      outputLogs: '[COASTY CUA] Launched VS Code executable. Workspace ./workspace opened.',
+      outputLogs: '[agent] Launched VS Code executable. Workspace ./workspace opened.',
     },
     {
       stepNumber: 3,
@@ -57,7 +57,7 @@ export default function LandingPage() {
       actionText: 'Executing npm run dev and starting local dev server on port 3000',
       command: 'npm run dev',
       status: 'pending' as const,
-      outputLogs: '[COASTY CUA] > next dev\n[INFO] Ready in 1.8s at http://localhost:3000',
+      outputLogs: '[agent] > next dev\n[INFO] Ready in 1.8s at http://localhost:3000',
     },
     {
       stepNumber: 4,
@@ -87,12 +87,12 @@ export default function LandingPage() {
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-extrabold text-xl tracking-tight text-white">COASTY AI</span>
+              <span className="font-extrabold text-xl tracking-tight text-white">Approval Desk</span>
               <Badge variant="default" className="text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
-                CUA ENGINE v5
+                DEMO
               </Badge>
             </div>
-            <p className="text-[11px] text-zinc-400">Autonomous Computer-Use AI Operator</p>
+            <p className="text-[11px] text-zinc-400">Human approval for computer-use agents</p>
           </div>
         </Link>
 
@@ -100,7 +100,7 @@ export default function LandingPage() {
           <a href="#features" className="hover:text-white transition-colors">Features</a>
           <a href="#demo" className="hover:text-white transition-colors">Live CUA Stream</a>
           <a href="#benchmarks" className="hover:text-white transition-colors">Benchmarks</a>
-          <a href="#api" className="hover:text-white transition-colors">Coasty API</a>
+          <a href="#api" className="hover:text-white transition-colors">Integration</a>
         </nav>
 
         <div className="flex items-center space-x-3">
@@ -126,7 +126,7 @@ export default function LandingPage() {
         <div className="relative z-10 space-y-6">
           <div className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-cyan-500/30 text-xs font-mono text-cyan-400 shadow-xl backdrop-blur-md">
             <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span>Autonomous Desktop Agent Model • Coasty CUA Engine v5</span>
+            <span>Approvals &amp; audit trail for computer-use agents</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
@@ -137,8 +137,8 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Coasty AI operates your desktop applications, VS Code, terminals, and browsers completely autonomously. 
-            Automate complex multi-step routines, inspect live execution feeds, and elevate developer throughput by 10x.
+            Approval Desk breaks a goal into steps, sends them to a computer-use agent (the Coasty API today, with an OpenAI fallback planner), 
+            rates each step&apos;s risk, and pauses risky actions until a human approves them.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -169,7 +169,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center space-x-1.5 text-amber-400">
               <Cpu className="w-4 h-4" />
-              <span>Coasty API Integration Ready</span>
+              <span>Works with the Coasty computer-use API</span>
             </div>
           </div>
         </div>
@@ -179,13 +179,13 @@ export default function LandingPage() {
       <section id="demo" className="py-12 px-6 lg:px-12 max-w-7xl mx-auto w-full z-10">
         <div className="text-center space-y-2 mb-8">
           <Badge variant="outline" className="text-[10px] font-mono text-cyan-400 border-cyan-500/30">
-            INTERACTIVE REPLAY STREAM DEMO
+            SIMULATED REPLAY DEMO
           </Badge>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
             Live Desktop Screen Stream & Step Timeline
           </h2>
           <p className="text-xs text-zinc-400 max-w-xl mx-auto">
-            Click any step below to test the time-travel step replay and observe Coasty CUA Agent executing actions.
+            Click any step below to replay a sample run. The screens in this demo are simulated illustrations, not real captures.
           </p>
         </div>
 
@@ -278,11 +278,11 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto space-y-10">
           <div className="text-center space-y-2">
             <Badge variant="outline" className="text-[10px] font-mono text-cyan-400 border-cyan-500/30">
-              PERFORMANCE & AGENT ACCURACY
+              ILLUSTRATIVE TARGETS
             </Badge>
             <h2 className="text-3xl font-extrabold text-white">Engine Benchmarks & Metrics</h2>
             <p className="text-xs text-zinc-400 max-w-lg mx-auto">
-              Built on Coasty CUA Engine v5 for autonomous computer interaction across desktop and browser environments.
+              Illustrative design targets for this prototype, not measured benchmarks.
             </p>
           </div>
 
@@ -302,7 +302,7 @@ export default function LandingPage() {
               </div>
               <p className="text-3xl font-extrabold text-white font-mono">99.4%</p>
               <h3 className="font-bold text-sm text-zinc-200">Action Perception Accuracy</h3>
-              <p className="text-xs text-zinc-400">Coasty vision model predicts UI target coordinates with pixel precision.</p>
+              <p className="text-xs text-zinc-400">Target for UI action accuracy (depends on the agent provider).</p>
             </Card>
 
             <Card className="bg-zinc-950 border-zinc-800 p-6 space-y-2 shadow-2xl">
@@ -383,17 +383,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Coasty API Callout */}
+      {/* Agent provider callout */}
       <section id="api" className="py-16 px-6 lg:px-12 bg-zinc-900/60 border-t border-zinc-800 z-10">
         <div className="max-w-5xl mx-auto p-8 rounded-3xl bg-zinc-950 border border-zinc-800 space-y-6 shadow-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <Globe className="w-5 h-5 text-cyan-400" />
-                <h2 className="text-xl font-bold text-white">Coasty CUA API Integration</h2>
+                <h2 className="text-xl font-bold text-white">Agent provider: Coasty computer-use API</h2>
               </div>
               <p className="text-xs text-zinc-400 max-w-xl">
-                Configure your API key in <code className="font-mono text-cyan-400">.env</code> to unleash real managed execution containers on Coasty cloud machines.
+                Configure your API key in <code className="font-mono text-cyan-400">.env</code> to run tasks on Coasty&apos;s managed machines. Approval Desk is an independent project and is not affiliated with Coasty.
               </p>
             </div>
             <Link href={'/settings' as any}>
@@ -422,7 +422,7 @@ const taskResponse = await coastyClient.submitTask({
           <Link href={'/workflows' as any} className="hover:text-zinc-300">Workflows</Link>
           <Link href={'/login' as any} className="hover:text-zinc-300">Sign In</Link>
         </div>
-        <p>© 2026 COASTY AI • Autonomous Computer-Use AI Operator • Powered by Coasty CUA Engine v5</p>
+        <p>© 2026 Approval Desk • Independent open-source project, not affiliated with Coasty • Integrates with the Coasty computer-use API</p>
       </footer>
     </div>
   );

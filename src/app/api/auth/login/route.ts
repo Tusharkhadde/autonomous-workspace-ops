@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       email: email.toLowerCase(),
       avatarUrl: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150`,
       role: 'AI Productivity Engineer',
-      plan: 'Coasty Pro Enterprise',
+      plan: 'Demo',
     };
 
     return NextResponse.json({ success: true, user });
