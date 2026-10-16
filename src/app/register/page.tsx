@@ -43,7 +43,7 @@ export default function RegisterPage() {
             <Sparkles className="w-5 h-5" />
           </div>
           <span className="font-extrabold text-lg text-white tracking-tight">
-            COASTY <span className="text-cyan-400 font-mono text-xs font-semibold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">CUA v5</span>
+            Approval Desk <span className="text-cyan-400 font-mono text-xs font-semibold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">demo</span>
           </span>
         </Link>
         <Link href="/login">
@@ -65,7 +65,7 @@ export default function RegisterPage() {
             </div>
             <CardTitle className="text-2xl font-extrabold text-white">Create Developer Account</CardTitle>
             <CardDescription className="text-xs text-zinc-400">
-              Get instant access to Coasty AI autonomous computer-use agents & workspace automation.
+              Create a demo account to review computer-use agent runs and approvals.
             </CardDescription>
           </CardHeader>
 
@@ -100,7 +100,7 @@ export default function RegisterPage() {
                   <input
                     type="email"
                     required
-                    placeholder="alex.rivera@coasty.ai"
+                    placeholder="alex.rivera@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-cyan-500/50 transition-colors"
@@ -126,7 +126,7 @@ export default function RegisterPage() {
               <div className="space-y-2 pt-1 text-[11px] text-zinc-400">
                 <div className="flex items-center space-x-2 text-emerald-400">
                   <CheckCircle className="w-3.5 h-3.5" />
-                  <span>Includes 500 free Coasty CUA credits / month</span>
+                  <span>Bring your own Coasty API key</span>
                 </div>
               </div>
 
@@ -150,7 +150,7 @@ export default function RegisterPage() {
             </form>
 
             <p className="text-center text-[11px] text-zinc-500 pt-2">
-              By registering, you agree to Coasty CUA developer safety guidelines & workspace policies.
+              Demo registration: accounts are not persisted yet.
             </p>
           </CardContent>
         </Card>
@@ -158,7 +158,7 @@ export default function RegisterPage() {
 
       {/* Footer */}
       <footer className="px-6 py-4 border-t border-zinc-800/80 text-center text-xs text-zinc-500 font-mono">
-        COASTY AI COMPUTER USE ENGINE v5 • DEVELOPER ONBOARDING
+        APPROVAL DESK • DEMO ONBOARDING
       </footer>
     </div>
   );

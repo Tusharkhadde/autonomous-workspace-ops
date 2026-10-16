@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'COASTY AI — Autonomous AI Computer-Use Engine & Workspace Optimizer',
-  description: 'Autonomous AI computer operator powered by Coasty CUA Engine v5. Executes complex real-world desktop and browser workflows.',
+  title: 'Approval Desk — Human approval & audit trail for computer-use agents',
+  description: 'A control room for computer-use agents: plan steps, rate their risk, and require human approval before risky actions. Integrates with the Coasty computer-use API.',
 };
 
 export const viewport: Viewport = {

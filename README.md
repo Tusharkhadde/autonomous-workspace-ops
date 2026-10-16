@@ -1,4 +1,6 @@
-# 👻 COASTY AI — Autonomous Computer-Use Agent & Ghost Workspace Operator
+# Approval Desk — human approval & audit trail for computer-use agents
+
+> **Name note:** this project was previously branded "COASTY AI". That is the name of the company whose computer-use API this app calls, so it was renamed to avoid confusion. "Approval Desk" is a working name; rename freely. This is an independent project and is **not affiliated with or endorsed by Coasty**.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
@@ -7,16 +9,18 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?style=for-the-badge&logo=postgresql)](https://neon.tech)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-**COASTY AI** is a state-of-the-art autonomous **Computer-Use AI Operator (CUA v5)** and **Ghost Workspace Optimizer**. It turns high-level human instructions into multi-step desktop, browser, and shell operations with real-time SSE streaming, live perception overlays, intelligent self-healing, and human-in-the-loop risk governance.
+**Approval Desk** is a control room for computer-use agents. It turns a goal into steps, sends them to an agent provider (the [Coasty](https://coasty.ai) computer-use API today, with an OpenAI fallback planner), rates each step's risk, pauses risky steps until a human approves them, and streams logs over SSE.
+
+> **Prototype status:** the screen previews in the "perception canvas" are **simulated SVG illustrations** generated in the app, not real captures from the agent's machine. They are watermarked "SIMULATED" in the UI. Sign-in/registration are demo-only (no accounts are persisted), and the workspace-optimizer modules (focus tracking, duplicate finder) show sample data because a web app cannot read desktop activity.
 
 ---
 
 ## 🌟 Key Features
 
-### 1. 🤖 Autonomous Computer-Use AI Operator (CUA v5)
+### 1. 🤖 Computer-Use Agent Runner
 * **Goal Decomposer**: Translates complex human prompts (e.g. *"Clone repo, configure Docker environment, and deploy container"*) into structured multi-step execution graphs.
-* **Dual Planning Engine**: Powered by **OpenAI GPT-4o** and the official **Coasty AI API** (`https://coasty.ai`), with an offline fallback domain heuristic planner.
-* **Self-Healing Diagnostics**: Automatically detects command timeouts or dependency failures, suggests recovery commands, and attempts self-healing workflows.
+* **Dual Planning Engine**: Uses the **Coasty computer-use API** (`https://coasty.ai`) and **OpenAI GPT-4o**, with an offline fallback heuristic planner.
+* **Recovery suggestions**: On a failed step, suggests recovery commands (experimental).
 
 ### 2. 🛡️ Human-in-the-Loop Risk Governance
 * **Automated Risk Classifier**: Rates execution steps into `Low`, `Medium`, `High`, or `Critical` risk levels.
@@ -25,10 +29,10 @@
 
 ### 3. 📺 Live Execution Control Room
 * **Real-time SSE Streaming**: Stream step-by-step logs, status changes, and machine state updates live via Server-Sent Events.
-* **Perception Canvas**: View visual screenshot canvas with target app perception markers.
+* **Perception Canvas**: Shows the agent's screen when the provider returns one; otherwise a clearly labelled *simulated* preview.
 * **Interactive Terminal**: Real-time stdout/stderr log inspector.
 
-### 4. ⚡ Ghost Workspace Optimizer
+### 4. ⚡ Workspace Optimizer (demo data)
 * **Focus & Activity Tracker**: Tracks app usage, context switches, deep work duration, and focus session scores.
 * **Productivity Coach**: AI-generated insights pointing out workflow bottlenecks and context-switching fatigue.
 * **Duplicate File Detector**: Scans workspace directories to identify duplicate files and reclaim storage space.
@@ -78,18 +82,18 @@ npm install
 
 ### 🔑 3. Configure Environment Variables
 
-Create a `.env` file in the root directory (or copy from `.env.example`):
+Copy `.env.example` to `.env` and fill it in. The database is **PostgreSQL** (not SQLite):
 
 ```env
 # Database Connection (Neon PostgreSQL)
-DATABASE_URL="postgresql://username:password@ep-sample-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DBNAME?sslmode=require"
 
-# Coasty AI API Key (https://coasty.ai)
-COASTY_API_KEY="sk-coasty-live-your-api-key"
+# Coasty computer-use API key (https://coasty.ai)
+COASTY_API_KEY=""
 COASTY_BASE_URL="https://coasty.ai"
 
 # OpenAI API Key (Optional fallback planner)
-OPENAI_API_KEY="sk-proj-your-openai-api-key"
+OPENAI_API_KEY=""
 ```
 
 ---
@@ -163,4 +167,4 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+No LICENSE file is included yet. Add one (for example MIT) before others reuse this code.

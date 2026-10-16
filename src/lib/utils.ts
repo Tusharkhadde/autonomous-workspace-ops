@@ -49,12 +49,14 @@ export function getStatusColor(status: string): string {
 }
 
 /**
- * Generates a Base64 SVG Data URI representing realistic desktop application screenshots
- * with active window titlebars, terminal buffers, VS Code, and mouse targets.
+ * Generates an SVG data URI that ILLUSTRATES a desktop screen for a step.
+ * This is a simulated placeholder, never a real capture: it is watermarked
+ * "SIMULATED" and the UI labels it as such. Replace with real provider
+ * screenshots when the agent API returns them.
  */
 export function generateSyntheticScreenshot(
   app: string = 'Google Chrome',
-  title: string = 'Coasty AI Autonomous Workspace',
+  title: string = 'Agent Workspace',
   actionText: string = 'Executing task...',
   stepNumber: number = 1
 ): string {
@@ -77,13 +79,13 @@ export function generateSyntheticScreenshot(
     headerColor = '#111827';
     accentColor = '#10b981';
     bodyContent = `
-      <text x="20" y="70" fill="#10b981" font-family="monospace" font-size="14">operator@coasty-vm-node-5:~$</text>
+      <text x="20" y="70" fill="#10b981" font-family="monospace" font-size="14">operator@sample-vm:~$</text>
       <text x="250" y="70" fill="#f3f4f6" font-family="monospace" font-size="14">${safeTitle.slice(0, 35)}</text>
-      <text x="20" y="100" fill="#9ca3af" font-family="monospace" font-size="13">[INFO] Initializing Coasty CUA Agent v5 driver...</text>
+      <text x="20" y="100" fill="#9ca3af" font-family="monospace" font-size="13">[INFO] Simulated agent driver (illustration)</text>
       <text x="20" y="125" fill="#60a5fa" font-family="monospace" font-size="13">[STEP ${stepNumber}] ${safeAction.slice(0, 50)}</text>
       <text x="20" y="155" fill="#34d399" font-family="monospace" font-size="13">&#10003; Command completed with status code 0</text>
       <text x="20" y="185" fill="#d1d5db" font-family="monospace" font-size="13">Listening on port 3000 (HTTP/1.1 200 OK)</text>
-      <text x="20" y="215" fill="#10b981" font-family="monospace" font-size="14">operator@coasty-vm-node-5:~$ <tspan fill="#60a5fa">&#9608;</tspan></text>
+      <text x="20" y="215" fill="#10b981" font-family="monospace" font-size="14">operator@sample-vm:~$ <tspan fill="#60a5fa">&#9608;</tspan></text>
     `;
   } else if (isVSCode) {
     bgColor = '#1e1e1e';
@@ -99,9 +101,9 @@ export function generateSyntheticScreenshot(
       
       <rect x="180" y="40" width="620" height="360" fill="#1e1e1e" />
       <text x="200" y="75" fill="#569cd6" font-family="monospace" font-size="13">import</text>
-      <text x="255" y="75" fill="#9cdcfe" font-family="monospace" font-size="13"> { CoastyOperator } </text>
+      <text x="255" y="75" fill="#9cdcfe" font-family="monospace" font-size="13"> { AgentRunner } </text>
       <text x="390" y="75" fill="#569cd6" font-family="monospace" font-size="13">from</text>
-      <text x="430" y="75" fill="#ce9178" font-family="monospace" font-size="13">&apos;@coasty/sdk&apos;</text>
+      <text x="430" y="75" fill="#ce9178" font-family="monospace" font-size="13">&apos;./agent&apos;</text>
       <text x="200" y="105" fill="#6a9955" font-family="monospace" font-size="13">// ${safeAction.slice(0, 45)}</text>
       <text x="200" y="135" fill="#dcdcaa" font-family="monospace" font-size="13">runAutonomousWorkflow</text>
       <text x="365" y="135" fill="#ffd700" font-family="monospace" font-size="13">({ goal: &quot;${safeTitle.slice(0, 30)}&quot; })</text>
@@ -116,7 +118,7 @@ export function generateSyntheticScreenshot(
     if (lowerTitle.includes('openai') || safeAction.toLowerCase().includes('openai')) {
       displayUrl = 'https://platform.openai.com/docs/guides';
     } else if (lowerTitle.includes('github') || safeAction.toLowerCase().includes('github')) {
-      displayUrl = 'https://github.com/coasty-ai/ghost-operator';
+      displayUrl = 'https://github.com/example/project';
     } else if (lowerTitle.includes('youtube')) {
       displayUrl = 'https://youtube.com';
     }
@@ -132,15 +134,15 @@ export function generateSyntheticScreenshot(
       <!-- Web Header -->
       <text x="35" y="125" fill="#f8fafc" font-family="sans-serif" font-size="18" font-weight="bold">${safeTitle.slice(0, 42)}</text>
       <rect x="35" y="140" width="180" height="24" rx="12" fill="#0369a1" />
-      <text x="50" y="156" fill="#7dd3fc" font-family="sans-serif" font-size="11" font-weight="bold">COASTY CUA VERIFIED 200 OK</text>
+      <text x="50" y="156" fill="#7dd3fc" font-family="sans-serif" font-size="11" font-weight="bold">SIMULATED PREVIEW</text>
       
       <!-- Document Article Card -->
       <rect x="35" y="180" width="730" height="180" rx="6" fill="#0f172a" stroke="#334155" />
       <text x="55" y="210" fill="#38bdf8" font-family="sans-serif" font-size="14" font-weight="bold">Documentation Overview &amp; API Reference</text>
       <text x="55" y="235" fill="#94a3b8" font-family="sans-serif" font-size="13">Active Action: ${safeAction.slice(0, 55)}</text>
-      <text x="55" y="260" fill="#cbd5e1" font-family="monospace" font-size="12">const operator = new CoastyAgent({ model: &quot;v5-autonomous&quot; });</text>
+      <text x="55" y="260" fill="#cbd5e1" font-family="monospace" font-size="12">const operator = new AgentRunner({ provider: &quot;coasty&quot; });</text>
       <text x="55" y="285" fill="#cbd5e1" font-family="monospace" font-size="12">await operator.executeTask(&quot;${safeTitle.slice(0, 35)}&quot;);</text>
-      <text x="55" y="315" fill="#34d399" font-family="sans-serif" font-size="12" font-weight="bold">&#10003; Target element perceived and clicked by Coasty CUA Agent v5</text>
+      <text x="55" y="315" fill="#34d399" font-family="sans-serif" font-size="12" font-weight="bold">Simulated step illustration, not a real screen capture</text>
     `;
   }
 
@@ -150,10 +152,12 @@ export function generateSyntheticScreenshot(
     <circle cx="20" cy="18" r="6" fill="#ef4444" />
     <circle cx="38" cy="18" r="6" fill="#f59e0b" />
     <circle cx="56" cy="18" r="6" fill="#10b981" />
-    <text x="400" y="23" fill="#9ca3af" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="500">${app} — Coasty AI CUA Engine v5</text>
+    <text x="400" y="23" fill="#9ca3af" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="500">${app} — SIMULATED PREVIEW</text>
     ${bodyContent}
     <rect x="220" y="110" width="340" height="60" fill="none" stroke="${accentColor}" stroke-width="2" stroke-dasharray="4,4" />
     <polygon points="230,120 230,145 240,138 248,155 253,153 245,135 255,135" fill="${accentColor}" stroke="#ffffff" stroke-width="1" />
+    <rect x="560" y="360" width="228" height="28" rx="6" fill="#f59e0b" fill-opacity="0.9" />
+    <text x="674" y="379" fill="#1c1917" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle">SIMULATED — not a real capture</text>
   </svg>`;
 
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;

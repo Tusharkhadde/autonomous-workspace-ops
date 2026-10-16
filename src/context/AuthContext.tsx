@@ -38,10 +38,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const demoUser: UserProfile = {
           id: 'usr_demo_101',
           name: 'Alex Rivera',
-          email: 'alex.rivera@coasty.ai',
+          email: 'alex.rivera@example.com',
           avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
           role: 'AI Productivity Engineer',
-          plan: 'Coasty Pro Enterprise',
+          plan: 'Demo',
         };
         setUser(demoUser);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(demoUser));

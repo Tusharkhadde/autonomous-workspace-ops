@@ -135,7 +135,7 @@ export class ExecutionEngine {
     }
 
     const maskedKey = coastyClient.getMaskedKey();
-    const logHeader = `[Coasty CUA Engine] Authenticated with X-API-Key: ${maskedKey}\n[Coasty Agent] Machine ${run.machineId || 'cloud_v5_vm'} executing action: "${pendingStep.title}"`;
+    const logHeader = `[Coasty API] Authenticated with X-API-Key: ${maskedKey}\n[agent] Machine ${run.machineId || 'cloud_v5_vm'} executing action: "${pendingStep.title}"`;
 
     // Mark step as running
     await db.executionStep.update({

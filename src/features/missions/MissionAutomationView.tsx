@@ -311,7 +311,7 @@ export const MissionAutomationView: React.FC = () => {
         title={
           <>
             <span>Mission Automation</span>
-            <Badge variant="default" className="ml-2 text-[10px] font-mono">COASTY CUA ENGINE v5</Badge>
+            <Badge variant="default" className="ml-2 text-[10px] font-mono">via Coasty API</Badge>
           </>
         }
         description={
@@ -463,7 +463,7 @@ export const MissionAutomationView: React.FC = () => {
               <div className="rounded-xl bg-zinc-950 border border-zinc-800 flex flex-col">
                 <div className="flex items-center space-x-2 px-3 py-2 border-b border-zinc-800 text-xs font-mono text-emerald-400">
                   <Terminal className="w-3.5 h-3.5" />
-                  <span>COASTY MISSION STREAM</span>
+                  <span>MISSION STREAM</span>
                   {missionRun?.status === 'running' && (
                     <span className="ml-auto animate-pulse text-cyan-400">● LIVE</span>
                   )}
@@ -655,11 +655,11 @@ export const MissionAutomationView: React.FC = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-semibold text-zinc-300">Autonomous Prompt / Instructions for Coasty AI</label>
+                <label className="font-semibold text-zinc-300">Instructions for the agent</label>
                 <textarea
                   required
                   rows={3}
-                  placeholder="Describe step-by-step what Coasty should do on your computer desktop..."
+                  placeholder="Describe step-by-step what the agent should do on the desktop..."
                   value={newMissionPrompt}
                   onChange={(e) => setNewMissionPrompt(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-white font-mono focus:outline-none focus:border-cyan-500/50"

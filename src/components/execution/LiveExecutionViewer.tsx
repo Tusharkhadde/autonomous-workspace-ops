@@ -28,11 +28,11 @@ import { Button } from '@/components/ui/button';
 
 const DEFAULT_DEMO_RUN: WorkflowRunData = {
   id: 'run_demo_morning_startup',
-  title: 'Prepare Coding Workspace — Coasty CUA v5',
+  title: 'Prepare Coding Workspace (sample run)',
   prompt: 'Prepare coding workspace: Open VS Code, launch Terminal, start dev server, and open browser documentation.',
   status: 'running',
   cuaVersion: 'v5',
-  machineId: 'coasty-node-v5-cloud-09',
+  machineId: 'sample-machine-01',
   maxSteps: 4,
   stepsCount: 4,
   riskScore: 'low',
@@ -71,7 +71,7 @@ const DEFAULT_DEMO_RUN: WorkflowRunData = {
       riskLevel: 'low',
       requiresApproval: false,
       isApproved: true,
-      outputLogs: '[COASTY CUA] Launched VS Code executable. Opened workspace folder ./workspace.',
+      outputLogs: '[agent] Launched VS Code executable. Opened workspace folder ./workspace.',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
@@ -89,7 +89,7 @@ const DEFAULT_DEMO_RUN: WorkflowRunData = {
       riskLevel: 'medium',
       requiresApproval: false,
       isApproved: true,
-      outputLogs: '[COASTY CUA] > next dev\n[INFO] Ready in 1.8s at http://localhost:3000\n[LIVE] Polling event stream active...',
+      outputLogs: '[agent] > next dev\n[INFO] Ready in 1.8s at http://localhost:3000\n[LIVE] Polling event stream active...',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
@@ -209,9 +209,9 @@ export const LiveExecutionViewer: React.FC = () => {
               <h2 className="text-base font-extrabold text-white truncate max-w-lg">{currentRun.title}</h2>
             </div>
             <p className="text-xs text-zinc-400 font-mono flex items-center space-x-2">
-              <span>Machine: {currentRun.machineId || 'coasty-node-v5-cloud-09'}</span>
+              <span>Machine: {currentRun.machineId || 'sample-machine-01'}</span>
               <span>•</span>
-              <span className="text-cyan-400">Coasty CUA Engine {currentRun.cuaVersion}</span>
+              <span className="text-cyan-400">Agent CUA {currentRun.cuaVersion}</span>
             </p>
           </div>
 
@@ -298,7 +298,7 @@ export const LiveExecutionViewer: React.FC = () => {
                 </Badge>
               </div>
               <pre className="p-3.5 rounded-xl bg-zinc-900 font-mono text-xs text-zinc-300 overflow-x-auto max-h-36 border border-zinc-800/80 leading-relaxed whitespace-pre-wrap">
-                {currentStep?.outputLogs || '[Coasty Agent Log] Standing by for desktop action stream...'}
+                {currentStep?.outputLogs || '[agent] Standing by for desktop action stream...'}
               </pre>
             </CardContent>
           </Card>
